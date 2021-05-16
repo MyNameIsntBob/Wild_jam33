@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Art/Gold.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Gold.gd" type="Script" id=2]
+
+[sub_resource type="PhysicsMaterial" id=1]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 2.55018
+
+[node name="Fork" type="RigidBody2D" groups=[
+"Gold",
+]]
+z_index = 1
+collision_layer = 8
+collision_mask = 106
+physics_material_override = SubResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
+value = 12
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -0.5, -2.5 )
+texture = ExtResource( 1 )
+hframes = 10
+vframes = 10
+frame = 3
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0.501697, 0.501697 )
+polygon = PoolVector2Array( -1.07201, 0.0608032, -2.01732, 0.0529907, -2.04076, -0.947009, -3.04857, -0.954822, -3.03295, -3.04076, -1.97045, -3.04076, -1.95482, -1.04857, -1.07201, -1.04857, -1.04857, -3.04857, 0.0451784, -3.05638, 0.0842409, -1.05638, 0.959241, -1.04857, 0.943616, -3.03295, 2.0608, -3.03295, 2.0608, -0.962634, 1.07643, -0.947009, 1.07643, 0.0295532, 0.0529909, 0.0608032, 0.0764284, 1.06862, -1.09545, 1.0608 )
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

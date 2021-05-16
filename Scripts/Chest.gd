@@ -1,0 +1,24 @@
+extends Node2D
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	$Label.text = str(Global.gold)
+
+
+func _on_Area2D_body_entered(body):
+	for item in get_tree().get_nodes_in_group("Gold"):
+		if item.player == body:
+			item.queue_free()
+			Global.gold += item.value
+			

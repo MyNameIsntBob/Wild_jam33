@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Art/MainCharacter-Sheet.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Chest.gd" type="Script" id=2]
+[ext_resource path="res://Art/Gold.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[node name="Chest" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="MainCharacter-Sheet" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+hframes = 8
+vframes = 2
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -8.0
+margin_top = -14.0
+margin_right = 8.0
+text = "1"
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -8, -43 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+hframes = 10
+vframes = 10
+frame = 1
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
