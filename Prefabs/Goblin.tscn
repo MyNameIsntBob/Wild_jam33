@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Goblin.gd" type="Script" id=1]
-[ext_resource path="res://Art/Sword-Goblin-Sheet.png" type="Texture" id=2]
-[ext_resource path="res://Art/helmet-Sheet.png" type="Texture" id=3]
+[ext_resource path="res://Art/Characters/Sword-Goblin-Sheet.png" type="Texture" id=2]
+[ext_resource path="res://Art/Characters/helmet-Sheet.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 2.0
@@ -96,16 +96,21 @@ tracks/1/keys = {
 "values": [ 8, 9, 10, 11 ]
 }
 
-[node name="Goblin" type="KinematicBody2D"]
+[node name="Goblin" type="KinematicBody2D" groups=[
+"Character",
+"Goblin",
+]]
 collision_mask = 81
 script = ExtResource( 1 )
 max_hp = 6
 team = 1
-attackDamage = 1.0
+attack_damage = 1.0
 
 [node name="AttackTimer" type="Timer" parent="."]
 
 [node name="ChaseTimer" type="Timer" parent="."]
+
+[node name="WanderTimer" type="Timer" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 3 )
@@ -121,6 +126,7 @@ __meta__ = {
 }
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 5
 __meta__ = {
 "_edit_lock_": true
 }
@@ -147,5 +153,6 @@ anims/Walk = SubResource( 5 )
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
 [connection signal="timeout" from="ChaseTimer" to="." method="_on_ChaseTimer_timeout"]
+[connection signal="timeout" from="WanderTimer" to="." method="_on_WanderTimer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

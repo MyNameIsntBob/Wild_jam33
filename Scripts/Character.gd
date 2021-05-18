@@ -4,18 +4,22 @@ export var armor := false
 export var max_hp := 5
 
 var attacking := false
-var hp : int
+var hp : float
 
 var input_vector := Vector2.ZERO
 
 var acceleration := 80
-var walk_speed := 15
+var normal_speed := 15
 var run_speed := 30
 var running := false
+var walk_speed := 5
+var walking := false
 var velocity := Vector2.ZERO
 var friction := 0.2
 
 var inertia = 10
+
+var last_attacked_by 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,6 +34,8 @@ func _process(delta):
 	if input_vector.x != 0:
 		$Sprite.flip_h = input_vector.x < 0
 		$Armor.flip_h = $Sprite.flip_h
+		if $Shoes:
+			$Shoes.flip_h = $Sprite.flip_h
 #		if input_vector.x > 0:
 #			$Sprite.frame_coords.y = 1
 #		else:
@@ -56,8 +62,13 @@ func _process(delta):
 		
 	$Armor.visible = armor
 
-func take_damage(amount):
+func take_damage(amount, attacker = null):
+	if armor:
+		amount = amount / 2
 	hp -= amount
+	
+	if attacker:
+		last_attacked_by = attacker
 
 
 func _physics_process(delta):
@@ -65,8 +76,10 @@ func _physics_process(delta):
 		velocity += input_vector * acceleration * delta
 		if running:
 			velocity = velocity.clamped(run_speed)
-		else:
+		elif walking:
 			velocity = velocity.clamped(walk_speed)
+		else:
+			velocity = velocity.clamped(normal_speed)
 	else:
 		velocity = velocity.linear_interpolate(Vector2.ZERO, friction)
 		

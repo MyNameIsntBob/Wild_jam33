@@ -6,14 +6,16 @@ extends RigidBody2D
 var player
 var shadow
 
-onready var shadowPath = preload('res://Prefabs/Shadow.tscn')
+onready var shadow_path = preload('res://Prefabs/Shadow.tscn')
 
-var onGround := true
-var groundLevel := 6
-var spawnHeight := -10
+var on_ground := true
+var ground_level := 6
+var spawn_height := -10
 
-var defaultMask
-var defaultLayer
+var default_mask
+var default_layer
+
+var ground_layer := 4
 
 #How much it sells for
 export var value = 1
@@ -23,10 +25,10 @@ var bodies = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	shadow = shadowPath.instance()
-	defaultMask = collision_mask
-	defaultLayer = collision_layer
-	if onGround:
+	shadow = shadow_path.instance()
+	default_mask = collision_mask
+	default_layer = collision_layer
+	if on_ground:
 		set_on_ground()
 	else:
 		set_held()
@@ -34,7 +36,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if onGround:
+	if on_ground:
 		ground_process(delta)
 	
 	else:
@@ -52,20 +54,20 @@ func ground_process(delta):
 
 func set_held():
 	player = bodies[0]
-	self.position.y = player.position.y + spawnHeight
+	self.position.y = player.position.y + spawn_height
 	mode = RigidBody2D.MODE_RIGID
 	self.gravity_scale = 1
-	onGround = false
-	collision_mask = defaultMask
-	collision_layer = defaultLayer
+	on_ground = false
+	collision_mask = default_mask
+	collision_layer = default_layer
 	
 func held_process(delta):
-	var currentGroundLevel = player.position.y + groundLevel
+	var current_ground_level = player.position.y + ground_level
 #	shadow.position.y = currentGroundLevel
 #	shadow.global_position.y = currentGroundLevel
 #	shadow.global_position.x = self.global_position.x
 #	shadow.Global.x = self.position.x
-	if self.position.y > currentGroundLevel:
+	if self.position.y > current_ground_level:
 		set_on_ground()
 		
 func set_on_ground():
@@ -73,9 +75,9 @@ func set_on_ground():
 	self.gravity_scale = 0
 	mode = RigidBody2D.MODE_STATIC
 #		linear_velocity = Vector2.ZERO
-	onGround = true
+	on_ground = true
 	collision_mask = 0
-	collision_layer = 0
+	collision_layer = ground_layer
 
 
 func _on_Area2D_body_entered(body):
