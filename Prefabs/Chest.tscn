@@ -88,6 +88,8 @@ __meta__ = {
 position = Vector2( 11, -2 )
 
 [node name="GoblinUpgrade" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GoblinUpgrade"]
 position = Vector2( 32.5, 8 )

@@ -3,6 +3,8 @@ extends Node
 var item_id := 0
 var cost := 5
 
+var costs := []
+
 enum ITEMS {
 	SHOES,
 	HORNS,

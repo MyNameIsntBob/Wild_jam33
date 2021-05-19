@@ -153,7 +153,7 @@ func attack():
 	yield($AnimationPlayer, 'animation_finished')
 	attacking = false
 	
-	if target and target.position.distance_to(self.position)  <= attack_range + 3:
+	if target and is_instance_valid(target) and target.position.distance_to(self.position)  <= attack_range + 3:
 		target.take_damage(attack_damage, self)
 	
 	$AttackTimer.wait_time = (1/attack_speed) + rand_range(-0.2, 0.2)

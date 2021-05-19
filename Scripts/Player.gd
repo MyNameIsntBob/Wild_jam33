@@ -8,6 +8,7 @@ onready var bigHorns = preload("res://Art/Characters/MainCharacterLongHorns-Shee
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	normal_speed = 20
 	Global.player = self
 	$Shoes.hide()
 
