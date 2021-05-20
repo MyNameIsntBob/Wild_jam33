@@ -2,6 +2,7 @@ extends Node
 
 
 var player
+var hero
 
 var is_game_over := false
 var current_gold = 0

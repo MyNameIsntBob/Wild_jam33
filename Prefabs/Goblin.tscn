@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Goblin.gd" type="Script" id=1]
 [ext_resource path="res://Art/Characters/Sword-Goblin-Sheet.png" type="Texture" id=2]
@@ -7,10 +7,7 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 2.0
 
-[sub_resource type="CircleShape2D" id=2]
-radius = 32.0
-
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "Attack"
 length = 0.5
 tracks/0/type = "value"
@@ -38,7 +35,7 @@ tracks/1/keys = {
 "values": [ 5, 6, 7 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "Idle"
 length = 0.8
 loop = true
@@ -67,7 +64,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 resource_name = "Walk"
 length = 1.2
 loop = true
@@ -103,14 +100,11 @@ tracks/1/keys = {
 collision_mask = 81
 script = ExtResource( 1 )
 max_hp = 6
-team = 1
 attack_damage = 1.0
 
 [node name="AttackTimer" type="Timer" parent="."]
-
-[node name="ChaseTimer" type="Timer" parent="."]
-
-[node name="WanderTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 3 )
@@ -125,19 +119,6 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_mask = 5
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 0, 3 )
-shape = SubResource( 2 )
-__meta__ = {
-"_edit_lock_": true
-}
-
 [node name="Armor" type="Sprite" parent="."]
 visible = false
 position = Vector2( 0.5, 0 )
@@ -147,12 +128,11 @@ frame = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
-anims/Attack = SubResource( 3 )
-anims/Idle = SubResource( 4 )
-anims/Walk = SubResource( 5 )
+anims/Attack = SubResource( 2 )
+anims/Idle = SubResource( 3 )
+anims/Walk = SubResource( 4 )
+
+[node name="ReloadPathTimer" type="Timer" parent="."]
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
-[connection signal="timeout" from="ChaseTimer" to="." method="_on_ChaseTimer_timeout"]
-[connection signal="timeout" from="WanderTimer" to="." method="_on_WanderTimer_timeout"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
+[connection signal="timeout" from="ReloadPathTimer" to="." method="_on_ReloadPathTimer_timeout"]
