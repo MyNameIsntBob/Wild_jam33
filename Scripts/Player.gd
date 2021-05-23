@@ -38,6 +38,8 @@ func add_shoes():
 	has_shoes = true
 	
 func add_armor():
+	max_hp += 1
+	hp = max_hp
 	armor = true
 
 
@@ -59,3 +61,16 @@ func queue_free():
 	.queue_free()
 	
 	
+
+func take_damage(amount, attacker = null):
+	amount = 1
+	hp -= amount
+	
+	if attacker:
+		last_attacked_by = attacker
+#		print(velocity) 
+#		print((self.global_position - attacker.global_position).normalized())
+		velocity = (self.global_position - attacker.global_position).normalized() * nock_back
+		nocking_back = true
+#		print(velocity)
+#		velocity = Vector2.RIGHT * 1000

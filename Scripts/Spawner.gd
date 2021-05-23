@@ -7,6 +7,8 @@ onready var GOBLIN = preload("res://Prefabs/Goblin.tscn")
 
 var wave_counter := 0
 
+var goblins = []
+
 var spawning := false
 
 var group
@@ -19,11 +21,16 @@ func _ready():
 		group = 'Goblin'
 
 func _process(delta):
-	if len(get_tree().get_nodes_in_group(group)) == 0 and !spawning:
+	wave_counter = Global.wave_counter
+	if (len(goblins) == 0 or len(get_tree().get_nodes_in_group(group)) == 0) and !spawning:
 		spawning = true
-		wave_counter += 1
+#		wave_counter += 1
 		goblins_in_wave = 0
 		$Timer.start()
+		
+	for g in goblins:
+		if !is_instance_valid(g):
+			goblins.erase(g)
 
 func spawn():
 	var newGoblin
@@ -35,6 +42,7 @@ func spawn():
 	
 	newGoblin.position = self.position
 	get_parent().add_child(newGoblin)
+	goblins.append(newGoblin)
 
 func _on_Timer_timeout():
 	goblins_in_wave += 1

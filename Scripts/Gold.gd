@@ -6,6 +6,9 @@ extends RigidBody2D
 var player
 var shadow
 
+var fade_out = 1.0
+var fade_rate = 0.01
+
 onready var shadow_path = preload('res://Prefabs/Shadow.tscn')
 
 var on_ground := true
@@ -37,11 +40,17 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if on_ground:
+		fade_out -= fade_rate * delta
 		ground_process(delta)
 	
 	else:
+		fade_out = 1
 		held_process(delta)
 	
+	modulate.a = fade_out
+	
+	if fade_out <= 0:
+		self.queue_free()
 #	var force = Vector2.ZERO
 #	for body in bodies:
 #		force += body.velocity
@@ -62,6 +71,8 @@ func set_held():
 	collision_layer = default_layer
 	
 func held_process(delta):
+	if !player or !is_instance_valid(player):
+		set_on_ground()
 	var current_ground_level = player.position.y + ground_level
 #	shadow.position.y = currentGroundLevel
 #	shadow.global_position.y = currentGroundLevel

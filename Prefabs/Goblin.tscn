@@ -99,8 +99,12 @@ tracks/1/keys = {
 ]]
 collision_mask = 81
 script = ExtResource( 1 )
-max_hp = 6
+max_hp = 0.5
 attack_damage = 1.0
+
+[node name="ReloadPathTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -132,7 +136,5 @@ anims/Attack = SubResource( 2 )
 anims/Idle = SubResource( 3 )
 anims/Walk = SubResource( 4 )
 
-[node name="ReloadPathTimer" type="Timer" parent="."]
-
-[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
 [connection signal="timeout" from="ReloadPathTimer" to="." method="_on_ReloadPathTimer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]

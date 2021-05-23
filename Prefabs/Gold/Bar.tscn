@@ -14,7 +14,6 @@ radius = 2.55018
 [node name="Bar" type="RigidBody2D" groups=[
 "Gold",
 ]]
-z_index = 1
 collision_layer = 8
 collision_mask = 106
 physics_material_override = SubResource( 1 )
